@@ -1,0 +1,8 @@
+<div class="loginFormWrapper">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="loginForm">
+        <h3>CRMFeather</h3>
+        <input type="text" name="userName" placeholder="Username" ngModel [(ngModel)]="userName">
+        <input type="password" name="password" placeholder="Password" ngModel [(ngModel)]="password">
+        <button type="submit" mat-raised-button color="primary">Login</button>
+    </form>
+</div>

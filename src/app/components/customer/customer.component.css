@@ -1,0 +1,15 @@
+.modal {
+  width: 60%;
+  margin: 0 auto;
+  height: auto;
+  background-color: gray;
+  padding: 25px;
+}
+
+.modal-hide {
+  display: none;
+}
+
+.modal-show {
+  display: block;
+}

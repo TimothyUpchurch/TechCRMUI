@@ -1,0 +1,51 @@
+nav {
+  height: auto;
+  width: 100%;
+  padding: 30px 0;
+}
+
+.logo {
+  color: #673ab7;
+  font-size: 1.8rem;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+  margin: 0 auto;
+}
+
+nav ul {
+  display: flex;
+}
+
+nav ul li {
+  list-style-type: none;
+}
+
+nav ul li a {
+  color: #673ab7;
+  text-decoration: none;
+}
+
+nav ul li:not(:last-child) {
+  margin-right: 45px;
+}
+
+.med-icon {
+  transform: scale(1.2);
+}
+
+.people-icon {
+  color: #ee9c61;
+}
+
+.purchase-icon {
+  color: #61eeee;
+}
+
+.product-icon {
+  color: #6180ee;
+}

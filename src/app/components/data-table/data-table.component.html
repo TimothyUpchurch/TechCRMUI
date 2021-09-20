@@ -1,0 +1,89 @@
+
+<div style="display: flex; flex-direction: column;">
+
+    <!-- "width: 70%; margin: 0 auto;" -->
+    <div style="display: flex; width: 70%; margin: 0 auto; margin-top: 60px; justify-content: space-between; align-items: center;padding: 5px 0;">
+        <span style="margin-left: 3.5rem; font-size: 1.1rem;">{{parentComponent}}</span>
+        <app-filter-data [placeholderText]="searchByPlaceholder" (passFilter)="passFilter($event)"></app-filter-data>
+    </div>
+    
+    <!-- check parent component and use switch?? -->
+    <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="dataList | filter:searchFilter : searchBy" class="mat-elevation-z8" style="width: 70%; margin: 35px auto;">
+        <div [ngSwitch]="parentComponent">
+            <div *ngSwitchCase="'Customers'">
+                <ng-container *ngFor="let col of headerColumns; let i=index;" matColumnDef="{{col}}">
+                    <th mat-header-cell *matHeaderCellDef> {{col}} </th>
+                    <ng-container *matCellDef="let element">
+                        <td mat-cell *ngIf="col!='Options'; else options">{{element[databaseColumns[i]]}}</td>
+        
+                        <ng-template #options>
+                            <td mat-cell>
+                                <a class="options-icon" (click)="showUpdateForm(element)" title="edit">
+                                    <mat-icon color="primary">edit</mat-icon>
+                                </a>
+                                <a  (click)="delete(element)" class="options-icon" title="delete">
+                                    <mat-icon color="primary">delete</mat-icon>
+                                </a>              
+                            </td>
+                        </ng-template>
+                    </ng-container>           
+                </ng-container>
+            </div>
+
+            <div *ngSwitchCase="'Purchases'">
+                <ng-container *ngFor="let col of headerColumns; let i=index;" matColumnDef="{{col}}">
+                    <th mat-header-cell *matHeaderCellDef> {{col}} </th>
+                    <ng-container *matCellDef="let element">
+                        <td mat-cell *ngIf="col!='Options'; else options">{{element[databaseColumns[i]]}}</td>
+        
+                        <ng-template #options>
+                            <td mat-cell>
+                                <a  (click)="delete(element)" class="options-icon" title="delete">
+                                    <mat-icon color="primary">delete</mat-icon>
+                                </a>               
+                            </td>
+                        </ng-template>
+                    </ng-container>           
+                </ng-container>
+            </div>
+
+            <div *ngSwitchCase="'Products'">
+                <ng-container *ngFor="let col of headerColumns; let i=index;" matColumnDef="{{col}}">
+                    <th mat-header-cell *matHeaderCellDef> {{col}} </th>
+                    <ng-container *matCellDef="let element">
+                        <td mat-cell *ngIf="col!='Options'; else options">{{element[databaseColumns[i]]}}</td>
+        
+                        <ng-template #options>
+                            <td mat-cell>
+                                <a class="options-icon" (click)="showUpdateForm(element)" title="edit">
+                                    <mat-icon color="primary">edit</mat-icon>
+                                </a>
+                                <a  (click)="delete(element)" class="options-icon" title="delete">
+                                    <mat-icon color="primary">delete</mat-icon>
+                                </a>               
+                            </td>
+                        </ng-template>
+                    </ng-container>           
+                </ng-container>
+            </div>
+        </div>
+
+        <tr mat-header-row *matHeaderRowDef="headerColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: headerColumns;"></tr>
+        
+    </table>
+
+    <button mat-raised-button color="primary" style="margin: 0 auto;" (click)="showAddForm()">Add</button>
+    <button mat-button (click)="exporter.exportTable('csv')" id="exportDataBtn">Export</button> 
+    <hr>
+</div>
+
+<!-- Add / Edit Popup Modal -->
+<app-add-edit-modal 
+[headerColumns]="headerColumns" 
+[databaseColumns]="databaseColumns" 
+[buttonText]="buttonText" 
+[updatedData]="updatedData"
+[parentComponent]="parentComponent" 
+(addDataDB)="add($event)" (updateDataDB)="update($event)">
+</app-add-edit-modal>

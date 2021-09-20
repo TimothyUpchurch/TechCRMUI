@@ -1,0 +1,15 @@
+<h3 style="text-align: center; margin-top: 30px;">All Products</h3>
+
+<app-data-table
+[headerColumns]="headerColumns" 
+[databaseColumns]="databaseColumns" 
+[dataList]="productsList"
+[searchBy]="'productName'"
+[searchByPlaceholder]="'Search by name...'"
+[parentComponent]="componentName"
+(deleteDataDB)="deleteProduct($event)" 
+(addDataDB)="addProduct($event)" 
+(updateDataDB)="updateProduct($event)" 
+>
+
+</app-data-table>

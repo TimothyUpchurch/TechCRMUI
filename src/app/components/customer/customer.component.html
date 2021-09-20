@@ -1,0 +1,84 @@
+<!-- 
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <input type="text" #test (keyup)="testInput(test.value)" placeholder="Filter Names...">
+
+    <table mat-table [dataSource]="CustomersList" class="mat-elevation-z8" style="width: 80%; margin: 20px auto;">  
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.customerId}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef> Age </th>
+        <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="sex">
+        <th mat-header-cell *matHeaderCellDef> Sex </th>
+        <td mat-cell *matCellDef="let element"> {{element.sex}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="options">
+            <th mat-header-cell *matHeaderCellDef>Options</th>
+            <td mat-cell *matCellDef="let element">
+                <a (click)="editCustomer(element)">
+                    <mat-icon color="primary">edit</mat-icon>
+                </a>
+                
+                <a (click)="deleteCustomer(element)">
+                    <mat-icon color="primary">delete</mat-icon>
+                </a>           
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  <button mat-raised-button color="primary" (click)="addCustomer()">Add Customer</button>
+</div>
+
+<div class="modal modal-hide" id="customerModal">
+    <h3>{{formTitle}}</h3>
+    <form id="customerForm" #customerNGForm="ngForm">
+        <input type="text" placeholder="Name" ngModel name="firstName" [(ngModel)]="firstName">
+        <input type="text" placeholder="Name" ngModel name="lastName" [(ngModel)]="lastName">
+        <input type="text" placeholder="Age" ngModel name="age" [(ngModel)]="age">
+        <input type="text" placeholder="Sex" ngModel name="sex" [(ngModel)]="sex">
+        <input type="text" placeholder="Email" ngModel name="email" [(ngModel)]="email">
+
+        <button mat-raised-button color="primary" (click)="addCustomerDB(customerNGForm.value)" id="addCustomerDBBtn" *ngIf="formTitle=='Add Customer' else showUpdateBtn">Add</button>
+    
+        <ng-template #showUpdateBtn>
+            <button mat-raised-button color="primary" (click)="editcustomerDB()" id="editcustomerDBBtn">Update</button>
+        </ng-template> 
+    </form>
+</div> -->
+<h3 style="text-align: center; margin-top: 30px;">All Customers</h3>
+
+<app-data-table 
+[headerColumns]="headerColumns" 
+[databaseColumns]="databaseColumns" 
+[dataList]="CustomersList"
+[searchBy]="'customerId'"
+[searchByPlaceholder]="'Search by id...'"
+[parentComponent]="componentName" 
+(deleteDataDB)="deleteCustomer($event)" 
+(addDataDB)="addCustomer($event)" 
+(updateDataDB)="updatecustomerDB($event)">
+</app-data-table>
+
+
+  
+  

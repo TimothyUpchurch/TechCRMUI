@@ -1,0 +1,114 @@
+<div class="backdrop" id="formBackdrop">
+    <div class="form-container">
+        <!-- (ngSubmit)="dataForm.resetForm()" -->
+        <form #dataForm="ngForm" >
+            <span class="closeForm" (click)="hideForm()">+</span>
+
+            <div [ngSwitch]="parentComponent">
+                <!-- Form for customers -->
+                <div *ngSwitchCase="'Customers'">
+                    <!-- Dynamic input fields -->
+                    <ng-container *ngFor="let field of databaseColumns; let i= index;">
+                        <!-- Show every column besides ID and Options -->
+                        <ng-container *ngIf="field!='customerId' && field!='options' && field!='dateAdded'">
+                            <!-- When adding -->
+                            <input *ngIf="buttonText=='Add'; else updateInput" type="text" placeholder="{{headerColumns[i]}}" name="{{field}}" ngModel [(ngModel)]="formData[i]" />
+                        </ng-container>
+
+                        <ng-template #updateInput>
+                            <input type="text" placeholder="{{headerColumns[i]}}" name="{{field}}" ngModel [ngModel]="updatedData[field]">
+                        </ng-template>
+                    </ng-container>
+
+                    <button type="submit" (click)="addData(dataForm.value)" *ngIf="buttonText=='Add'; else updateButton">{{buttonText}}</button>
+                    <ng-template #updateButton>
+                        <button (click)="updateData(dataForm.value)">{{buttonText}}</button>
+                    </ng-template>
+                </div>
+                
+                <!-- Form for purchases -->
+                <div *ngSwitchCase="'Purchases'">
+                    <!-- Input fields to add a purchase -->
+                    <ng-container>
+                        <!-- Use a drop down of customers to select from -->
+                        <label for="customerPurchase">Customer</label>
+                        <select name="customerName" [(ngModel)]="customerName">
+                            <option *ngFor="let customer of customers;" value="{{customer.customerId}}">{{customer.firstName}}</option>
+                        </select>
+
+                        <!-- Use a drop down of products to select from -->
+                        <label for="">Prodcut</label>
+                        <select name="customerProduct" [(ngModel)]="productName">
+                            <option *ngFor="let product of products;" value="{{product.productId}}">{{product.productName}}</option>
+                        </select>
+
+                        <!-- Date selector -->
+                        <label for="">Date Purchased</label>
+                        <input type="date" id="purchaseDateInput">
+                    </ng-container>
+              
+                    <!-- BUTTONS -->
+                    <button type="submit" (click)="addPurchase()" *ngIf="buttonText=='Add'; else updateButton">{{buttonText}}</button>
+
+                    <ng-template #updateButton>
+                        <button type="submit" (click)="updateData(dataForm.value)">{{buttonText}}</button>
+                    </ng-template>
+                </div>
+
+                <!-- Form for products -->
+                <div *ngSwitchCase="'Products'">
+                    <ng-container *ngFor="let field of databaseColumns; let i = index;">
+                        <!-- Add Product -->
+                        <ng-container *ngIf="buttonText=='Add'; else updateProducts">
+                            <!-- Switch field columns -->
+                            <ng-container [ngSwitch]="field">
+                                <div *ngSwitchCase="'productName'">
+                                    <input type="text" placeholder="{{headerColumns[i]}}" name="{{field}}" ngModel [(ngModel)]="formData[i]">
+                                </div>
+                                <div *ngSwitchCase="'productType'">
+                                    <label for="">Product Type</label>
+                                    <select style="display: block;" [(ngModel)]="formData[i]" name="{{field}}">
+                                        <option *ngFor="let type of productTypes;" value="{{type.productTypeId}}">{{type.productType}}</option>
+                                    </select>
+                                </div>
+                                <div *ngSwitchCase="'stock'">
+                                    <input type="text" placeholder="{{headerColumns[i]}}" name="{{field}}" ngModel [(ngModel)]="formData[i]">
+                                </div>
+                                <div *ngSwitchCase="'price'">
+                                    <input type="text" placeholder="{{headerColumns[i]}}" name="{{field}}" ngModel [(ngModel)]="formData[i]">
+                                </div>
+                            </ng-container>  
+                        </ng-container>
+
+                        <!-- Update Products -->
+                        <ng-template #updateProducts>
+                            <ng-container [ngSwitch]="field">
+                                <div *ngSwitchCase="'productName'">
+                                    <input type="text" placeholder="{{headerColumns[i]}}" name="{{field}}" ngModel [ngModel]="updatedData[field]">
+                                </div>
+                                <div *ngSwitchCase="'productType'">
+                                    <label for="">Product Type</label>
+                                    <select style="display: block;" [ngModel]="updatedData['productTypeId']" name="{{field}}">
+                                        <option *ngFor="let type of productTypes;" value="{{type.productTypeId}}">{{type.productType}}</option>
+                                    </select>
+                                </div>
+                                <div *ngSwitchCase="'stock'">
+                                    <input type="text" placeholder="{{headerColumns[i]}}" name="{{field}}" ngModel [ngModel]="updatedData[field]">
+                                </div>
+                                <div *ngSwitchCase="'price'">
+                                    <input type="text" placeholder="{{headerColumns[i]}}" name="{{field}}" ngModel [ngModel]="updatedData[field]">
+                                </div>
+                            </ng-container>
+                        </ng-template>
+                    </ng-container>
+
+                    <button type="submit" (click)="addData(dataForm.value)" *ngIf="buttonText=='Add'; else updateButton">{{buttonText}}</button>
+                    <ng-template #updateButton>
+                        <button type="submit" (click)="updateData(dataForm.value)">{{buttonText}}</button>
+                    </ng-template>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

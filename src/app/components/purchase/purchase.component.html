@@ -1,0 +1,12 @@
+<h3 style="text-align: center; margin-top: 30px;">All Purchases</h3>
+
+<app-data-table 
+[headerColumns]="headerColumns" 
+[databaseColumns]="databaseColumns" 
+[dataList]="purchasesList"
+[searchBy]="'firstName'"
+[searchByPlaceholder]="'Search by first name...'"
+[parentComponent]="componentName" 
+(deleteDataDB)="deletePurchase($event)" 
+(addDataDB)="addPurchase($event)" 
+(updateDataDB)="updatePurchase($event)"></app-data-table>
